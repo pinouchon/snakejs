@@ -1,0 +1,33 @@
+!!! 5
+html(lang="en")
+    head
+        title Chat Page with Node.js, Express and Socket.io
+        link(href='http://fonts.googleapis.com/css?family=Asap', rel='stylesheet', type='text/css')
+        link(href='/stylesheets/style.css', rel='stylesheet', type='text/css')
+        script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+        script(type='text/javascript', src='/socket.io/socket.io.js')
+        script(type='text/javascript', src='/javascripts/Main.js')
+    body
+        audio(id='ks', src='http://hydra-images.cursecdn.com/dota2.gamepedia.com/8/8f/Announcer_kill_spree_01.mp3')
+        div(id='isimGirisEkrani', style='padding: 10px; border: #98A942 1px solid; width: 540px; margin-bottom: 10px; font-family: "Asap", Trebuchet MS, sans-serif; font-size: 14px;')
+            span Your name :
+            input(type='text', id='txtIsim', placeholder='İsminizi buraya girin...')
+            input(type='button', id='btnBaglan', value='Enter')
+
+        div(id='chatBolumu', style='display:none;')
+            div(style='float:left;width:100px;height: 330px;padding:10px;background-color: #98A942;box-shadow: 1px 1px 0px rgba(0,0,0,0.5);color: white;margin: 0;padding: 10px;font-family: "Asap", Trebuchet MS, sans-serif;')
+                div
+                    a(href='#', id='startGame') start game
+                div
+                    a(href='#', id='endGame') end game
+                br
+                b(style='display: block; background-color: #63740D; text-align: center; box-shadow: 1px 1px 0px rgba(255,255,255,0.5); margin-bottom: 10px;') Players
+                div(id='users', style='overflow: auto; height: 295px;')
+            div(style='float:left;padding:10px;margin-left: 20px;border: 1px solid #98A942;')
+                div(id='chatWindow', style='background-color: #FFFFC0; padding: 10px; border: 1px solid #E7E7A8;')
+                input(id='mesaj', style='width:280px;')
+                input(type='button', id='sendMessage', value='Send message')
+
+                div(style='clear:both')
+                div(id='mapContainer')
+                    div(id='map')

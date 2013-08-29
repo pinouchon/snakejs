@@ -1,0 +1,71 @@
+/*body {*/
+  /*padding: 50px;*/
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+/*}*/
+
+/*a {*/
+  /*color: #00B7FF;*/
+/*}*/
+
+
+#map table {
+    outline: 1px solid #CCC;
+    border-collapse: collapse;
+}
+#map td {
+    padding: 0;
+    margin: 0;
+    width: 9px;
+    height: 9px;
+    background-color: #EFEFEF;
+    cursor: pointer;
+    border: 1px solid #DDD;
+    /*border-radius: px;*/
+}
+#map td.player1, .player1 {
+    background-color: red;
+}
+#map td.player2, .player2 {
+    background-color: #E6E600;
+}
+#map td.player3, .player3 {
+    background-color: pink;
+}
+#map td.player4, .player4 {
+    background-color: blue;
+}
+#map td.player5, .player5 {
+    background-color: orange;
+}
+#map td.player6, .player6 {
+    background-color: purple;
+}
+#map td.player7, .player7 {
+    background-color: grey;
+}
+#map td.player8, .player8 {
+    background-color: teal;
+}
+#map td.player9, .player9 {
+    background-color: black;
+}
+#map td.player10, .player10 {
+    background-color: black;
+}
+#map td.player11, .player11 {
+    background-color: black;
+}
+#map td.food {
+    background-color: green;
+    border-radius: 10px;
+    opacity: 0.5;
+    /*display:block;*/
+    /*margin: -1px*/
+}
+#map td.debug {
+    border: 1px green solid;
+}
+#chatWindow {
+    height: 80px;
+    overflow: auto;
+}
