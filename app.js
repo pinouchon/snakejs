@@ -48,7 +48,7 @@ console.log("Express server listening on port %d in %s mode", app.address().port
  */
 
 var io = require('socket.io').listen(app);
-var users = {};
+//var users = {};
 var players = {};
 var W = 50;
 var H = 40;
@@ -79,21 +79,9 @@ io.sockets.on('connection', function (socket) {
         var id = Object.keys(players).length + 1;
         socket.name = name;
         socket.id = id;
-        players[id] = {
-            name: name,
+        players[id] = new Player({name: name,
             id: id,
-            alive: true,
-            bonus: [],
-            head: {x: (id) * 2, y: 2},
-            snake_len: 4,
-            direction: {x: 0, y: 1},
-            p_direction: {x: 0, y: 1},
-            pp_direction: {x: 0, y: 1}
-        };
-        console.log("=== " + id);
-//        var head = players[id]['head'];
-//        map[head.x][head.y].p = id;
-//        map[head.x][head.y].c = 5;
+            head: {x: (id) * 2, y: 2}});
 
         //socket.emit('playerId', id);
         socket.emit("sendMessage", "System", "Welcome.");
@@ -103,7 +91,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on("disconnect", function () {
         delete players[socket.id];
-        delete users[socket.userName];
+        //delete users[socket.userName];
         io.sockets.emit("refreshUsers", users);
         socket.broadcast.emit("sendMessage", "System", socket.userName + " has left the game");
     });
@@ -158,6 +146,7 @@ io.sockets.on('connection', function (socket) {
         diff = [];
 
         for (var k in players) {
+            //checkResurrect(players[k]);
             if (!players[k].alive) {
                 continue;
             }
@@ -262,15 +251,65 @@ io.sockets.on('connection', function (socket) {
                 map[j][i] = {p: 0, c: 0};
             }
         }
-
         for (var k in players) {
-            players[k].alive = true;
-            players[k].bonus = [];
-            players[k].head = {x: k * 2, y: 2};
-            players[k].snake_len = 4;
-            players[k].direction = {x: 0, y: 1};
-            players[k].p_direction = {x: 0, y: 1};
-            players[k].pp_direction = {x: 0, y: 1};
+            players[k].reset(k);
         }
     }
 });
+
+function Game() {
+
+}
+
+function Map(params) {
+
+}
+
+function Player(params) {
+    this.id = params.id || 0
+    this.name = params.name || 'Guest';
+    this.alive = params.alive || true;
+    this.bonus = params.bonus || [];
+    this.head = params.head || {x: 4, y: 2};
+    this.snake_len = params.snake_len || 4;
+    this.direction = params.direction || {x: 0, y: 1};
+    this.p_direction = params.p_direction || {x: 0, y: 1};
+    this.pp_direction = params.pp_direction || {x: 0, y: 1};
+    this.resurectTime = params.resurectTime || 0;
+    this.frozen = params.frozen || false;
+
+    this.reset = function (k) {
+        this.alive = true;
+        this.bonus = [];
+        this.head = {x: k * 2, y: 2};
+        this.snake_len = 4;
+        this.direction = {x: 0, y: 1};
+        this.p_direction = {x: 0, y: 1};
+        this.pp_direction = {x: 0, y: 1};
+        this.resurectTime = 0;
+        this.frozen = false;
+    };
+
+    this.kill = function () {
+        this.alive = false;
+        this.resurectTime = 120;
+    };
+
+    this.resurect = function () {
+        this.alive = true;
+        this.resurectTime = 0;
+        this.frozen = true;
+    };
+
+    this.unfreeze = function () {
+        this.frozen = false;
+    };
+
+    this.checkResurrect = function () {
+        this.resurectTime--;
+        if (this.resurectTime <= 0) {
+            this.resurectTime = 0;
+            this.alive = true;
+        }
+    };
+}
