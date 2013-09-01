@@ -10,7 +10,7 @@
     <file path="/Dummy.txt" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378039576117" ignored="false" />
     <file path="/a.dummy" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1373225721956" ignored="false" />
     <file path="/chatPage.jade" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1377797981405" ignored="false" />
-    <file path="/app.js" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1377815414414" ignored="false" />
+    <file path="/app.js" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378044362552" ignored="false" />
     <file path="/Main.js" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1373491160232" ignored="false" />
     <file path="/style.css" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1373491945774" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,7 +41,7 @@
       <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="286" column="8" selection-start="9070" selection-end="9074" vertical-scroll-proportion="2.4207492">
+            <state line="87" column="35" selection-start="2513" selection-end="2513" vertical-scroll-proportion="-4.6726456">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -348,7 +348,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -435,7 +435,9 @@
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="9" selection-start="1016" selection-end="1016" vertical-scroll-proportion="-8.765379" />
+        <state line="70" column="9" selection-start="1016" selection-end="1016" vertical-scroll-proportion="-8.765379">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/Main.js">
@@ -449,7 +451,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="286" column="8" selection-start="9070" selection-end="9074" vertical-scroll-proportion="2.4207492">
+        <state line="87" column="35" selection-start="2513" selection-end="2513" vertical-scroll-proportion="-4.6726456">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
