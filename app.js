@@ -33,10 +33,10 @@ app.configure('production', function () {
 });
 
 // Routes
-app.get('/', routes.index);
+//app.get('/', routes.index);
 
 // Bu Kısmı ben ekledim.
-app.get('/chatPage', routes.chatPage);
+app.get('/', routes.chatPage);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

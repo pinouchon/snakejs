@@ -2,28 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a651ca47-49cc-4113-8aea-9fad9e189227" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/dominating.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/double_kill.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/godlike.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/holy_shit.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/killing_spree.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/mega_kill.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/monster_kill.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/ownage.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/rampage.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/triple_kill.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/ultra_kill.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/unstoppable.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/sounds/wicked_sick.mp3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/Main.js" afterPath="$PROJECT_DIR$/public/javascripts/Main.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/views/chatPage.jade" afterPath="$PROJECT_DIR$/views/snake.jade" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/chatPage.jade" afterPath="$PROJECT_DIR$/views/chatPage.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
     </list>
     <ignored path="chat_from_git.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378039576117" ignored="false" />
-    <file path="/a.dummy" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1373225721956" ignored="false" />
+    <file path="/a.dummy" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378060128812" ignored="false" />
     <file path="/chatPage.jade" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378056867585" ignored="false" />
     <file path="/app.js" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378059141623" ignored="false" />
     <file path="/Main.js" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378059981064" ignored="false" />
@@ -60,7 +46,7 @@
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="165" column="41" selection-start="4735" selection-end="4735" vertical-scroll-proportion="32.2">
+            <state line="38" column="23" selection-start="852" selection-end="852" vertical-scroll-proportion="-5.72">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -68,19 +54,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="2" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0">
+            <state line="10" column="19" selection-start="169" selection-end="169" vertical-scroll-proportion="0.32894737">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Main.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/javascripts/Main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="56" selection-start="472" selection-end="472" vertical-scroll-proportion="0.33632287">
+            <state line="16" column="20" selection-start="493" selection-end="493" vertical-scroll-proportion="-9.6">
               <folding>
                 <marker date="1378060033000" expanded="true" signature="868:903" placeholder="..." />
               </folding>
@@ -97,8 +83,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chatPage.jade" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/chatPage.jade">
+      <file leaf-file-name="snake.jade" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/snake.jade">
           <provider selected="true" editor-type-id="text-editor">
             <state line="33" column="45" selection-start="1880" selection-end="1889" vertical-scroll-proportion="-18.8">
               <folding />
@@ -127,8 +113,9 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/public/stylesheets/style.css" />
         <option value="$PROJECT_DIR$/views/chatPage.jade" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/public/javascripts/Main.js" />
+        <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/routes/index.js" />
       </list>
     </option>
   </component>
@@ -229,7 +216,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="routes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chat_from_git" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="snakejs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stylesheets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -355,13 +360,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="10" y="22" width="1420" height="817" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32963988" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27292576" sideWeight="0.6703297" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27292576" sideWeight="0.6703601" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -370,7 +376,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -450,7 +455,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/chatPage.jade">
+    <entry file="file://$PROJECT_DIR$/views/snake.jade">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="32" selection-start="1182" selection-end="1182" vertical-scroll-proportion="0.0">
           <folding />
@@ -501,13 +506,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="2" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="19" selection-start="388" selection-end="389" vertical-scroll-proportion="-12.2">
@@ -515,16 +513,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="165" column="41" selection-start="4735" selection-end="4735" vertical-scroll-proportion="32.2">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/chatPage.jade">
+    <entry file="file://$PROJECT_DIR$/views/snake.jade">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="45" selection-start="1880" selection-end="1889" vertical-scroll-proportion="-18.8">
           <folding />
@@ -533,10 +522,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/Main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="56" selection-start="472" selection-end="472" vertical-scroll-proportion="0.33632287">
+        <state line="16" column="20" selection-start="493" selection-end="493" vertical-scroll-proportion="-9.6">
           <folding>
             <marker date="1378060033000" expanded="true" signature="868:903" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="23" selection-start="852" selection-end="852" vertical-scroll-proportion="-5.72">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="19" selection-start="169" selection-end="169" vertical-scroll-proportion="0.32894737">
+          <folding />
         </state>
       </provider>
     </entry>

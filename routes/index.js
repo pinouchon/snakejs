@@ -8,5 +8,5 @@ exports.index = function(req, res){
 };
 
 exports.chatPage = function(req, res){
-  res.render("chatPage", { layout: false });
+  res.render("snake", { layout: false });
 };
