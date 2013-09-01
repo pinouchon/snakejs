@@ -48,16 +48,7 @@ console.log("Express server listening on port %d in %s mode", app.address().port
  */
 
 var io = require('socket.io').listen(app);
-//var users = {};
-var players = {};
-var W = 50;
-var H = 40;
-var map = new Array(H);
-var diff = [];
-var gameOver = false;
-var tickTimeout = undefined;
-var tickNb = 0;
-var delta = 0;
+var game = new Game();
 
 io.sockets.on('connection', function (socket) {
 //    socket.on("addUser", function (username) {
@@ -76,36 +67,36 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('addPlayer', function (name) {
         //var id = players.length;
-        var id = Object.keys(players).length + 1;
+        var id = Object.keys(game.players).length + 1;
         socket.name = name;
         socket.id = id;
-        players[id] = new Player({name: name,
+        game.players[id] = new Player({name: name,
             id: id,
             head: {x: (id) * 2, y: 2}});
 
         //socket.emit('playerId', id);
         socket.emit("sendMessage", "System", "Welcome.");
         socket.broadcast.emit("sendMessage", "System", name + " has joined the game (2).");
-        io.sockets.emit("refreshUsers", players);
+        io.sockets.emit("refreshUsers", game.players);
     });
 
     socket.on("disconnect", function () {
-        delete players[socket.id];
+        delete game.players[socket.id];
         //delete users[socket.userName];
-        io.sockets.emit("refreshUsers", users);
-        socket.broadcast.emit("sendMessage", "System", socket.userName + " has left the game");
+        io.sockets.emit("refreshUsers", game.players);
+        socket.broadcast.emit("sendMessage", "System", socket.name + " has left the game");
     });
 
     socket.on('startGame', function () {
-        clearTimeout(tickTimeout);
-        gameOver = false;
-        init();
-        io.sockets.emit('tick', diff, players);
-        tick();
+        clearTimeout(game.tickTimeout);
+        game.gameOver = false;
+        game.init(socket);
+        io.sockets.emit('tick', game.diff, game.players);
+        game.tick();
     });
 
     socket.on('endGame', function () {
-        gameOver = true;
+        game.gameOver = true;
     });
 
     socket.on("messageReceived", function (data) {
@@ -113,156 +104,183 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('keypress', function (code) {
-        if (!players[socket.id]) return;
+        if (!game.players[socket.id]) return;
 
-        var pdir = players[socket.id].p_direction;
+        var pdir = game.players[socket.id].p_direction;
         if (code == 'left' && pdir.x != 1 && pdir.y != 0) {
-            players[socket.id].direction.x = -1;
-            players[socket.id].direction.y = 0;
+            game.players[socket.id].direction.x = -1;
+            game.players[socket.id].direction.y = 0;
         }
         if (code == 'right' && pdir.x != -1 && pdir.y != 0) {
-            players[socket.id].direction.x = 1;
-            players[socket.id].direction.y = 0;
+            game.players[socket.id].direction.x = 1;
+            game.players[socket.id].direction.y = 0;
         }
         if (code == 'up' && pdir.x != 0 && pdir.y != 1) {
-            players[socket.id].direction.x = 0;
-            players[socket.id].direction.y = -1;
+            game.players[socket.id].direction.x = 0;
+            game.players[socket.id].direction.y = -1;
         }
         if (code == 'down' && pdir.x != 0 && pdir.y != -1) {
-            players[socket.id].direction.x = 0;
-            players[socket.id].direction.y = 1;
+            game.players[socket.id].direction.x = 0;
+            game.players[socket.id].direction.y = 1;
         }
     });
+});
 
-    /**
-     * Returns a random number between min and max
-     */
-    function getRandomArbitary(min, max) {
-        return Math.floor(Math.random() * (max - min) + min);
-    }
+/**
+ * Returns a random number between min and max
+ */
+function getRandomArbitary(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
 
-    function updateWorld() {
+function Game() {
+    this.players = {};
+    this.gameOver = false;
+    this.tickTimeout = undefined;
+    this.tickNb = 0;
+    this.map = new Map();
+    this.delta = 0;
+    this.socket = undefined;
+    var that = this;
+
+    this.tick = function () {
+        console.log('=== tick');
+        this.updateWorld();
+        this.map.print();
+        io.sockets.emit('tick', this.map.diff, this.players);
+        if (!that.gameOver) {
+            var timeout = Math.max(30, 100 - this.delta);
+            this.tickTimeout = setTimeout(function () {
+                that.tick();
+            }, parseInt(timeout));
+        }
+        if (this.tickNb < 5) {
+            this.delta += 3;
+        } else if (this.tickNb < 10) {
+            this.delta += 1;
+        } else if (this.tickNb < 30) {
+            this.delta += 0.5;
+        } else {
+            this.delta += 0.05;
+        }
+        this.tickNb = this.tickNb + 1;
+    };
+
+    this.init = function (socket) {
+        this.socket = socket;
+        console.log('init');
+        var j;
+        var i;
+        this.tickNb = 0;
+        this.delta = 0;
+        console.log('init map >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        // init map
+        for (j = 0; j < this.map.H; j++) {
+            this.map.tiles[j] = new Array(this.map.W);
+            for (i = 0; i < this.map.W; i++) {
+                console.log('i: ' + i + ' j: ' + j);
+                this.map.diff.push({x: i, y: j, p: 0});
+                this.map.tiles[j][i] = {p: 0, c: 0};
+            }
+        }
+        for (var k in this.players) {
+            this.players[k].reset(k);
+        }
+        this.map.print();
+    };
+
+    this.updateWorld = function () {
+
         console.log('=== updateMap');
-        diff = [];
+        this.map.diff = [];
 
-        for (var k in players) {
+        for (var k in game.players) {
             //checkResurrect(players[k]);
-            if (!players[k].alive) {
+            if (!game.players[k].alive) {
                 continue;
             }
-            console.log('==========', players[k].head.x, players[k].head.y, k);
-            players[k].head.x += players[k].direction.x;
-            players[k].head.y += players[k].direction.y;
-            players[k].p_direction = players[k].direction
-            if (players[k].head.x >= W || players[k].head.x < 0 ||
-                players[k].head.y >= H || players[k].head.y < 0) {
-                players[k].alive = false;
-                socket.broadcast.emit("sendMessage", "System", players[k].name + " is dead (out of map)");
+            console.log('==========', game.players[k].head.x, game.players[k].head.y, k);
+            game.players[k].head.x += game.players[k].direction.x;
+            game.players[k].head.y += game.players[k].direction.y;
+            game.players[k].p_direction = game.players[k].direction
+            if (game.players[k].head.x >= this.map.W || game.players[k].head.x < 0 ||
+                game.players[k].head.y >= this.map.H || game.players[k].head.y < 0) {
+                game.players[k].alive = false;
+                game.socket.broadcast.emit("sendMessage", "System", game.players[k].name + " is dead (out of map)");
                 continue;
             }
-            if (map[players[k].head.y][players[k].head.x].c > 0) {
-                players[k].alive = false;
-                socket.broadcast.emit("sendMessage", "System", players[k].name + " pwned by " +
-                    players[map[players[k].head.y][players[k].head.x].p].name);
+            if (this.map.tiles[game.players[k].head.y][game.players[k].head.x].c > 0) {
+                game.players[k].alive = false;
+                game.socket.broadcast.emit("sendMessage", "System", game.players[k].name + " pwned by " +
+                    game.players[this.map.tiles[game.players[k].head.y][game.players[k].head.x].p].name);
                 continue;
             }
-            if (map[players[k].head.y][players[k].head.x].p == -1) {
-                players[k].snake_len = players[k].snake_len + 1;
+            if (this.map.tiles[game.players[k].head.y][game.players[k].head.x].p == -1) {
+                game.players[k].snake_len = game.players[k].snake_len + 1;
             }
-            map[players[k].head.y][players[k].head.x].c = players[k].snake_len;
-            map[players[k].head.y][players[k].head.x].p = k;
-            diff.push({x: players[k].head.x, y: players[k].head.y, p: k});
+            this.map.tiles[game.players[k].head.y][game.players[k].head.x].c = game.players[k].snake_len;
+            this.map.tiles[game.players[k].head.y][game.players[k].head.x].p = k;
+            game.map.diff.push({x: game.players[k].head.x, y: game.players[k].head.y, p: k});
         }
 
         // food
         if (getRandomArbitary(0, 100) < 5) {
-            var x = getRandomArbitary(0, W - 1);
-            var y = getRandomArbitary(0, H - 1);
-            if (map[y][x].p == 0) {
-                map[y][x].p = -1;
-                diff.push({x: x, y: y, p: -1});
+            var x = getRandomArbitary(0, this.map.W - 1);
+            var y = getRandomArbitary(0, this.map.H - 1);
+            if (this.map.tiles[y][x].p == 0) {
+                this.map.tiles[y][x].p = -1;
+                game.map.diff.push({x: x, y: y, p: -1});
             }
         }
 
         var j;
         var i;
         var oldC;
-        for (j = 0; j < H; j++) {
-            for (i = 0; i < W; i++) {
-                oldC = map[j][i].c;
-                map[j][i].c = Math.max(0, map[j][i].c - 1);
-                if (map[j][i].c == 0 && map[j][i].p != -1) {
-                    map[j][i].p = 0;
+        for (j = 0; j < this.map.H; j++) {
+            for (i = 0; i < this.map.W; i++) {
+                oldC = this.map.tiles[j][i].c;
+                this.map.tiles[j][i].c = Math.max(0, this.map.tiles[j][i].c - 1);
+                if (this.map.tiles[j][i].c == 0 && this.map.tiles[j][i].p != -1) {
+                    this.map.tiles[j][i].p = 0;
                     if (oldC == 1) {
-                        diff.push({x: i, y: j, p: 0})
+                        game.map.diff.push({x: i, y: j, p: 0})
                     }
                 }
             }
         }
     }
+}
 
-    function debugMap() {
+function Map() {
+    this.W = 50;
+    this.H = 40;
+    this.tiles = new Array(this.H);
+    this.diff = [];
+
+    this.eachTile = function (callback) {
+        var i, j;
+        for (j = 0; j < this.H; j++) {
+            for (i = 0; i < this.W; i++) {
+                callback(i, j);
+            }
+        }
+    };
+
+    this.print = function () {
         var j;
         var i;
-        for (j = 0; j < H; j++) {
+        for (j = 0; j < this.H; j++) {
             var line = '=== ';
-            for (i = 0; i < W; i++) {
-                if (map[j][i].c > 0) {
-                    line += '' + map[j][i].c;
+            for (i = 0; i < this.W; i++) {
+                if (this.tiles[j][i].c > 0) {
+                    line += '' + this.tiles[j][i].c;
                 } else {
                     line += '.';
                 }
             }
             console.log(line);
         }
-    }
-
-    function tick() {
-        console.log('=== tick');
-        updateWorld();
-        debugMap();
-        io.sockets.emit('tick', diff, players);
-        if (!gameOver) {
-            var timeout = Math.max(30, 100 - delta);
-            tickTimeout = setTimeout(tick, parseInt(timeout));
-        }
-        if (tickNb < 5) {
-            delta += 3;
-        } else if (tickNb < 10) {
-            delta += 1;
-        } else if (tickNb < 30) {
-            delta += 0.5;
-        } else {
-            delta += 0.05;
-        }
-        tickNb = tickNb + 1;
-    }
-
-    function init() {
-        console.log('init');
-        var j;
-        var i;
-        tickNb = 0;
-        delta = 0;
-        for (j = 0; j < H; j++) {
-            map[j] = new Array(W);
-            for (i = 0; i < W; i++) {
-                diff.push({x: i, y: j, p: 0});
-                map[j][i] = {p: 0, c: 0};
-            }
-        }
-        for (var k in players) {
-            players[k].reset(k);
-        }
-    }
-});
-
-function Game() {
-
-}
-
-function Map(params) {
-
+    };
 }
 
 function Player(params) {
