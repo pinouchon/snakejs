@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a651ca47-49cc-4113-8aea-9fad9e189227" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/views/chatPage.jade" afterPath="$PROJECT_DIR$/views/snake.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Readme.txt" afterPath="$PROJECT_DIR$/Readme.md" />
     </list>
     <ignored path="chat_from_git.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378039576117" ignored="false" />
-    <file path="/a.dummy" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378060128812" ignored="false" />
+    <file path="/a.dummy" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378060234420" ignored="false" />
     <file path="/chatPage.jade" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378056867585" ignored="false" />
     <file path="/app.js" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378059141623" ignored="false" />
     <file path="/Main.js" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378059981064" ignored="false" />
@@ -18,6 +16,8 @@
     <file path="/a.html" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378055577449" ignored="false" />
     <file path="/a.xml" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378055556957" ignored="false" />
     <file path="/a.js" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378055583522" ignored="false" />
+    <file path="/Readme.txt" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378065184237" ignored="false" />
+    <file path="/Readme.md" changelist="a651ca47-49cc-4113-8aea-9fad9e189227" time="1378065259178" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +46,7 @@
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="23" selection-start="852" selection-end="852" vertical-scroll-proportion="-5.72">
+            <state line="38" column="20" selection-start="849" selection-end="849" vertical-scroll-proportion="40.2">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -54,10 +54,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Readme.md" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Readme.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="16" selection-start="326" selection-end="326" vertical-scroll-proportion="0.5263158">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="19" selection-start="169" selection-end="169" vertical-scroll-proportion="0.32894737">
+            <state line="9" column="8" selection-start="119" selection-end="119" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -116,6 +125,8 @@
         <option value="$PROJECT_DIR$/public/javascripts/Main.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
+        <option value="$PROJECT_DIR$/Readme.txt" />
+        <option value="$PROJECT_DIR$/Readme.md" />
       </list>
     </option>
   </component>
@@ -360,14 +371,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="10" y="22" width="1420" height="817" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32963988" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27292576" sideWeight="0.6703601" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27292576" sideWeight="0.6703601" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -439,15 +450,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/javascripts/Main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="9" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1378060033000" expanded="true" signature="868:903" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="13" selection-start="286" selection-end="286" vertical-scroll-proportion="0.0">
@@ -529,18 +531,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="8" selection-start="119" selection-end="119" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="23" selection-start="852" selection-end="852" vertical-scroll-proportion="-5.72">
+        <state line="38" column="20" selection-start="849" selection-end="849" vertical-scroll-proportion="40.2">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
+    <entry file="file://$PROJECT_DIR$/Readme.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="19" selection-start="169" selection-end="169" vertical-scroll-proportion="0.32894737">
+        <state line="16" column="16" selection-start="326" selection-end="326" vertical-scroll-proportion="0.5263158">
           <folding />
         </state>
       </provider>
