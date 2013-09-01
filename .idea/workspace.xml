@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a651ca47-49cc-4113-8aea-9fad9e189227" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Readme.txt" afterPath="$PROJECT_DIR$/Readme.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Readme.md" afterPath="$PROJECT_DIR$/Readme.md" />
     </list>
     <ignored path="chat_from_git.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,7 +57,7 @@
       <file leaf-file-name="Readme.md" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Readme.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="16" selection-start="326" selection-end="326" vertical-scroll-proportion="0.5263158">
+            <state line="22" column="2" selection-start="440" selection-end="440" vertical-scroll-proportion="0.7236842">
               <folding />
             </state>
           </provider>
@@ -549,7 +549,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Readme.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="16" selection-start="326" selection-end="326" vertical-scroll-proportion="0.5263158">
+        <state line="22" column="2" selection-start="440" selection-end="440" vertical-scroll-proportion="0.7236842">
           <folding />
         </state>
       </provider>

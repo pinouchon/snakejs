@@ -17,7 +17,7 @@ Original project by Ilker Guller http://developerarea.blogspot.com/
 
 Used Libraries:
 
-// Node.js : http://nodejs.org
-// Socket.io : http://socket.io
-// Express : http://expressjs.com
-// Jquery : http://www.jquery.com
+- Node.js : http://nodejs.org
+- Socket.io : http://socket.io
+- Express : http://expressjs.com
+- Jquery : http://www.jquery.com
