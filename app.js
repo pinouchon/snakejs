@@ -72,7 +72,9 @@ io.sockets.on('connection', function (socket) {
         socket.id = id;
         game.players[id] = new Player({name: name,
             id: id,
-            head: {x: (id) * 2, y: 2}});
+            index: game.playerIndex++
+        });
+        game.players[id].resurrect();
 
         //socket.emit('playerId', id);
         socket.emit("sendMessage", "System", "Welcome.");
@@ -104,8 +106,14 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('keypress', function (code) {
-        if (!game.players[socket.id]) return;
-        game.players[socket.id].updatePositionWithCode(code);
+        var player = game.players[socket.id];
+        if (!player) return;
+        player.frozen = false;
+        if (code == player.code) return;
+        if (isOpposite(code, player.code)) return;
+        player.prev_pressed_code = player.code;
+        player.code = code;
+        //player.updateDirectionWithCode(player.code);
     });
 });
 
@@ -115,8 +123,15 @@ io.sockets.on('connection', function (socket) {
 function getRandomArbitary(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
+function isOpposite(code1, code2) {
+    return (code1 == 'left' && code2 == 'right') ||
+        (code1 == 'right' && code2 == 'left') ||
+        (code1 == 'up' && code2 == 'down') ||
+        (code1 == 'down' && code2 == 'up');
+}
 
 function Game() {
+    this.playerIndex = 1;
     this.players = {};
     this.gameOver = false;
     this.tickTimeout = undefined;
@@ -129,7 +144,7 @@ function Game() {
     this.tick = function () {
         console.log('=== tick');
         this.updateWorld();
-        this.map.print();
+        //this.map.print();
         io.sockets.emit('tick', this.map.diff, this.players);
         if (!that.gameOver) {
             var timeout = Math.max(30, 100 - this.delta);
@@ -158,7 +173,8 @@ function Game() {
         // init map
         this.map.alloc();
         for (var k in this.players) {
-            this.players[k].reset(k);
+            this.players[k].index = k;
+            this.players[k].resurrect();
         }
         this.map.print();
     };
@@ -171,41 +187,59 @@ function Game() {
 
         for (var k in game.players) {
             var p = game.players[k];
-            //checkResurrect(players[k]);
-            if (!p.isAlive()) {
+            p.checkResurrect();
+            if (!p.alive) {
                 continue;
             }
-            console.log('==========', p.head.x, p.head.y, k);
+            console.log('>>> head.x, head.y, k: ', p.head.x, p.head.y, p.index);
             // For each player ****************************************************
-            // moving player
-            p.head.x += p.direction.x;
-            p.head.y += p.direction.y;
-            p.p_direction = p.direction;
-            // checking out of bounds
-            if (p.head.x >= map.W || p.head.x < 0 ||
-                p.head.y >= map.H || p.head.y < 0) {
-                p.die();
-                game.socket.broadcast.emit("sendMessage", "System", p.name + " is dead (out of map)");
-                continue;
+            // checking collision with tile just before (eg: if you press [left,top] very fast while moving down)
+            if (isOpposite(p.prev_tick_code, p.code)) {
+                p.updateDirectionWithCode(p.prev_pressed_code);
+            } else {
+                p.updateDirectionWithCode(p.code)
             }
-            // checking collisions
-            if (map.tiles[p.head.y][p.head.x].c > 0) {
-                if (map.tiles[p.head.y][p.head.x].c == p.snake_len && map.tiles[p.head.y][p.head.x].p == p.id) {
+            console.log("prev pressed: " + p.prev_pressed_code);
+            console.log("prev tick   : " + p.prev_tick_code);
+            console.log("code        : " + p.code);
+            console.log("\n\n\n");
 
+            // moving player
+            if (!p.frozen) {
+
+                p.head.x += p.direction.x;
+                p.head.y += p.direction.y;
+                p.p_direction = p.direction;
+
+                // checking out of bounds
+                if (p.head.x >= map.W || p.head.x < 0 ||
+                    p.head.y >= map.H || p.head.y < 0) {
+                    p.die();
+                    game.socket.broadcast.emit("sendMessage", "System", p.name + " is dead (out of map)");
+                    continue;
                 }
-                p.die();
-                game.socket.broadcast.emit("sendMessage", "System", p.name + " pwned by " +
-                    game.players[map.tiles[p.head.y][p.head.x].p].name);
-                continue;
+                // checking collisions
+                if (map.tiles[p.head.y][p.head.x].c > 0) {
+                    p.die();
+                    game.socket.broadcast.emit("sendMessage", "System", p.name + " pwned by " +
+                        game.players[map.tiles[p.head.y][p.head.x].p].name);
+                    continue;
+                }
+                // checking eating
+                if (map.tiles[p.head.y][p.head.x].p == -1) {
+                    p.snake_len = p.snake_len + 1;
+                }
+
+
+                // updating new head position on map
             }
-            // checking eating
-            if (map.tiles[p.head.y][p.head.x].p == -1) {
-                p.snake_len = p.snake_len + 1;
-            }
-            // updating new head position on map
             map.tiles[p.head.y][p.head.x].c = p.snake_len;
-            map.tiles[p.head.y][p.head.x].p = k;
-            map.diff.push({x: p.head.x, y: p.head.y, p: k});
+            map.tiles[p.head.y][p.head.x].p = p.index;
+
+            map.diff.push({x: p.head.x, y: p.head.y, p: p.index});
+
+            // prev tick
+            p.prev_tick_code = p.code;
         }
 
         // FOOD: each turn, 5% change of new food ************************************
@@ -279,81 +313,69 @@ function Map() {
 }
 
 function Player(params) {
-    this.id = params.id || 0
+    this.id = params.id || 0;
     this.name = params.name || 'Guest';
-    this.alive = params.alive || true;
-    this.bonus = params.bonus || [];
-    this.head = params.head || {x: 4, y: 2};
-    this.snake_len = params.snake_len || 4;
-    this.direction = params.direction || {x: 0, y: 1};
-    this.p_direction = params.p_direction || {x: 0, y: 1};
-    this.pp_direction = params.pp_direction || {x: 0, y: 1};
-    this.prev_code = params.prev_code || 'down';
-    this.override_code = params.override_code || false;
-    this.resurectTime = params.resurectTime || 0;
-    this.frozen = params.frozen || false;
+    this.index = params.index || 0;
 
-    this.reset = function (k) {
-        this.alive = true;
+//    this.alive = params.alive || true;
+//    this.bonus = params.bonus || [];
+//    this.head = params.head || {x: 4, y: 2};
+//    this.snake_len = params.snake_len || 4;
+//    this.direction = params.direction || {x: 0, y: 1};
+//    this.p_direction = params.p_direction || {x: 0, y: 1};
+//    this.pp_direction = params.pp_direction || {x: 0, y: 1};
+//    this.code = params.code || 'down';
+//    this.prev_pressed_code = params.prev_pressed_code || 'down';
+//    this.prev_tick_code = params.prev_tick_code || 'down';
+//    this.resurectTime = params.resurectTime || 0;
+//    this.frozen = params.frozen || false;
+
+    this.resurrect = function () {
         this.bonus = [];
-        this.head = {x: k * 2, y: 2};
+        this.alive = true;
+        this.resurectTime = 0;
+        this.frozen = true;
+        this.head = {x: this.index * 2, y: 0};
+        this.code = 'down';
+        this.prev_pressed_code = 'down';
+        this.prev_tick_code = 'down';
         this.snake_len = 4;
         this.direction = {x: 0, y: 1};
         this.p_direction = {x: 0, y: 1};
         this.pp_direction = {x: 0, y: 1};
-        this.resurectTime = 0;
-        this.frozen = false;
+        this.frozen = true;
+        //game.map.diff.push({x: this.head.x, y: this.head.y, p: this.index});
     };
 
-    this.updatePositionWithCode = function (code) {
-        var pdir = this.p_direction;
-        //game.players[socket.id].prev_code = pdir;
-        if (code == 'left' && pdir.x != 1 && pdir.y != 0) {
+    this.updateDirectionWithCode = function (code) {
+        //var pdir = this.p_direction;
+        if (code == 'left') {
             this.direction.x = -1;
             this.direction.y = 0;
         }
-        if (code == 'right' && pdir.x != -1 && pdir.y != 0) {
+        if (code == 'right') {
             this.direction.x = 1;
             this.direction.y = 0;
         }
-        if (code == 'up' && pdir.x != 0 && pdir.y != 1) {
+        if (code == 'up') {
             this.direction.x = 0;
             this.direction.y = -1;
         }
-        if (code == 'down' && pdir.x != 0 && pdir.y != -1) {
+        if (code == 'down') {
             this.direction.x = 0;
             this.direction.y = 1;
         }
     };
 
-    this.isAlive = function () {
-        return this.alive;
-    };
-
     this.die = function () {
         this.alive = false;
-        this.resurectTime = 120;
-    };
-
-    this.resurect = function () {
-        this.alive = true;
-        this.resurectTime = 0;
-        this.frozen = true;
-    };
-
-    this.freeze = function () {
-        this.frozen = true;
-    };
-
-    this.unfreeze = function () {
-        this.frozen = false;
+        this.resurectTime = 45;
     };
 
     this.checkResurrect = function () {
         this.resurectTime--;
-        if (this.resurectTime <= 0) {
-            this.resurectTime = 0;
-            this.alive = true;
+        if (!this.alive && this.resurectTime <= 0) {
+            this.resurrect();
         }
     };
 }
