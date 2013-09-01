@@ -2,6 +2,7 @@
 var socket;
 var W = 50;
 var H = 40;
+var streaks = {};
 //var id = 0;
 
 function SocketTarafi(kulIsmi) {
@@ -12,6 +13,11 @@ function SocketTarafi(kulIsmi) {
         socket.emit("addPlayer", kulIsmi);
         $('#isimGirisEkrani').fadeOut("fast", function () {
             $('#chatBolumu').fadeIn("fast");
+            if (document.URL.indexOf("admin42") != -1) {
+            } else {
+                $('#endGame').hide();
+                $('#startGame').hide();
+            }
             createMap();
         });
     });
@@ -32,7 +38,43 @@ function SocketTarafi(kulIsmi) {
 //            $('#users').append("<div>" + key + "</div>");
 //        });
         for (id in players) {
-            $('#users').append("<div class='player"+id+"'>" + players[id].name + "</div>");
+            var p = players[id];
+            $('#users').append("<div class='player" + id + "'>" + p.name + ' (' + p.totalKills + '/' + p.totalDeaths + ")</div>");
+        }
+    });
+
+    socket.on("killedBy", function (killed, killer, firstBlood) {
+        if (firstBlood) {
+            $('audio[src="/sounds/first_blood.mp3"]')[0].play();
+        }
+        if (killer) {
+            if (killer.killStreak == 3) $('audio[src="/sounds/killing_spree.mp3"]')[0].play();
+            if (killer.killStreak == 4) $('audio[src="/sounds/dominating.mp3"]')[0].play();
+            if (killer.killStreak == 5) $('audio[src="/sounds/mega_kill.mp3"]')[0].play();
+            if (killer.killStreak == 6) $('audio[src="/sounds/unstoppable.mp3"]')[0].play();
+            if (killer.killStreak == 7) $('audio[src="/sounds/wicked_sick.mp3"]')[0].play();
+            if (killer.killStreak == 8) $('audio[src="/sounds/monster_kill.mp3"]')[0].play();
+            if (killer.killStreak == 9) $('audio[src="/sounds/godlike.mp3"]')[0].play();
+            if (killer.killStreak > 9) $('audio[src="/sounds/holy_shit.mp3"]')[0].play();
+
+            if (typeof streaks[killer.index] === 'undefined') streaks[killer.index] = {kills: 0};
+            var counter = streaks[killer.index];
+            counter.kills++;
+            if (counter.kills >= 2) {
+                setTimeout(function () {
+                    if (counter.kills == 2) $('audio[src="/sounds/double_kill.mp3"]')[0].play();
+                    if (counter.kills == 3) $('audio[src="/sounds/triple_kill.mp3"]')[0].play();
+                    if (counter.kills == 4) $('audio[src="/sounds/ultra_kill.mp3"]')[0].play();
+                    if (counter.kills == 5) $('audio[src="/sounds/rampage.mp3"]')[0].play();
+                    if (counter.kills > 5) $('audio[src="/sounds/ownage.mp3"]')[0].play();
+                }, 2200)
+            }
+            if (counter.timeout) {
+                clearTimeout(counter.timeout);
+            }
+            counter.timeout = setTimeout(function () {
+                counter.kills = 0
+            }, 6000);
         }
     });
 
@@ -56,7 +98,8 @@ function SocketTarafi(kulIsmi) {
     });
 
     $('#startGame').click(function () {
-        document.getElementById('ks').play();
+        //document.getElementById('ks').play();
+        $('audio[src="/sounds/battle_begins.mp3"]')[0].play();
         socket.emit('startGame');
         return false;
     });

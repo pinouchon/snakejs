@@ -131,6 +131,7 @@ function isOpposite(code1, code2) {
 }
 
 function Game() {
+    this.firstBlood = true;
     this.playerIndex = 1;
     this.players = {};
     this.gameOver = false;
@@ -147,7 +148,7 @@ function Game() {
         //this.map.print();
         io.sockets.emit('tick', this.map.diff, this.players);
         if (!that.gameOver) {
-            var timeout = Math.max(30, 100 - this.delta);
+            var timeout = Math.max(90, 100 - this.delta);
             this.tickTimeout = setTimeout(function () {
                 that.tick();
             }, parseInt(timeout));
@@ -214,15 +215,16 @@ function Game() {
                 // checking out of bounds
                 if (p.head.x >= map.W || p.head.x < 0 ||
                     p.head.y >= map.H || p.head.y < 0) {
-                    p.die();
+                    p.killedBy(null);
                     game.socket.broadcast.emit("sendMessage", "System", p.name + " is dead (out of map)");
                     continue;
                 }
                 // checking collisions
                 if (map.tiles[p.head.y][p.head.x].c > 0) {
-                    p.die();
+                    var otherPlayer = game.players[map.tiles[p.head.y][p.head.x].p];
+                    p.killedBy(otherPlayer);
                     game.socket.broadcast.emit("sendMessage", "System", p.name + " pwned by " +
-                        game.players[map.tiles[p.head.y][p.head.x].p].name);
+                        otherPlayer.name);
                     continue;
                 }
                 // checking eating
@@ -234,9 +236,9 @@ function Game() {
                 // updating new head position on map
             }
             map.tiles[p.head.y][p.head.x].c = p.snake_len;
-            map.tiles[p.head.y][p.head.x].p = p.index;
+            map.tiles[p.head.y][p.head.x].p = p.id;
 
-            map.diff.push({x: p.head.x, y: p.head.y, p: p.index});
+            map.diff.push({x: p.head.x, y: p.head.y, p: p.id});
 
             // prev tick
             p.prev_tick_code = p.code;
@@ -316,6 +318,8 @@ function Player(params) {
     this.id = params.id || 0;
     this.name = params.name || 'Guest';
     this.index = params.index || 0;
+    this.totalKills = 0;
+    this.totalDeaths = 0;
 
 //    this.alive = params.alive || true;
 //    this.bonus = params.bonus || [];
@@ -344,6 +348,7 @@ function Player(params) {
         this.p_direction = {x: 0, y: 1};
         this.pp_direction = {x: 0, y: 1};
         this.frozen = true;
+        this.killStreak = 0;
         //game.map.diff.push({x: this.head.x, y: this.head.y, p: this.index});
     };
 
@@ -367,9 +372,19 @@ function Player(params) {
         }
     };
 
-    this.die = function () {
+    this.killedBy = function (otherPlayer) {
         this.alive = false;
         this.resurectTime = 45;
+        this.killStreak = 0;
+        this.totalDeaths++;
+
+        if (otherPlayer) {
+            otherPlayer.killStreak++;
+            otherPlayer.totalKills++;
+        }
+        game.socket.broadcast.emit("killedBy", this, otherPlayer, game.firstBlood);
+        io.sockets.emit("refreshUsers", game.players);
+        game.firstBlood = false;
     };
 
     this.checkResurrect = function () {
