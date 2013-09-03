@@ -1,8 +1,8 @@
 # Snakejs, the ultimate multiplayer snake by pinouchon
 
-*Check app.js for the server code, where the interesting logic is*. The client is in public/javascripts/Main.js.
+*Check app.js for the server code, where the interesting logic is. The client is in public/javascripts/Main.js.*
 
-Featues:
+Features:
 
 - Repop
 - Lives/deaths
