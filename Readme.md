@@ -4,10 +4,12 @@
 
 Features:
 
-- Repop
-- Lives/deaths
-- Kill streak
-- Rejoin
+- Multiplayer
+- Player list with status
+- Resurection after you die
+- Kill streak and double kills (with dota sounds)
+- Rejoining
+- Admin mode (to start and end game)
 - Super sounds !
 - More to come later
 
