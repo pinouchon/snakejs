@@ -1,8 +1,19 @@
-# Snakejs, the ultimate multiplayer snake by pinouchon
+# Snakejs the ultimate multiplayer snake
+
+## How to play
+
+ - Go to http://pinouchon.com:3000/?admin42
+ - Tell your friends to go to http://pinouchon.com:3000
+ - Then click the link: start game
+
+If the server is not running, send me a mail at pinouchon[at]gmail.com
+
+## the code
 
 *Check app.js for the server code, where the interesting logic is. The client is in public/javascripts/Main.js.*
 
-Features:
+
+## Features
 
 - Multiplayer
 - Player list with status
